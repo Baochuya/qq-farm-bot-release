@@ -10,7 +10,7 @@
 |---|---|
 | `qq-farm-bot-protected-image.tar.gz` | Docker 镜像（推荐） |
 | `qq-farm-bot-protected-image.tar.gz.sha256` | 校验值 |
-| `qq-farm-bot-protected-node20-x64.tar.gz` | 预编译包（Node 20.x 直跑） |
+| `qq-farm-bot-protected-node20-x64.tar.gz` | 预编译包（Node 20.x 直跑，随下次发版同步） |
 | `farm-mobile-*.apk` | Android 客户端 |
 
 ## 部署

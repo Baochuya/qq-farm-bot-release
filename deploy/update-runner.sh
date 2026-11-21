@@ -312,6 +312,8 @@ compose up -d --force-recreate >>"$LOG" 2>&1 || fail_and_rollback "docker compos
 write_state running health "等待健康检查" "" "${TAG:-}"
 if wait_healthy; then
     log "更新成功 ${TAG:-}"
+    # 记录已安装版本，供网页端“检测更新”比对 Release tag
+    if [ -n "$TAG" ]; then printf '%s\n' "$TAG" > "$UPD/installed-tag"; fi
     write_state success done "更新成功${TAG:+，版本 $TAG}" "" "${TAG:-}"
     rm -f "$PROC"
     exit 0
