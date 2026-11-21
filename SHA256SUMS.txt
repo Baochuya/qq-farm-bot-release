@@ -1,0 +1,2 @@
+f9945f600809f34e57f637ec74bb73a44af39c038c5ddd27d8da4c8b20a62a55  qq-farm-bot-protected-image.tar.gz
+119e1eb7228804b5d94f03a7d6daf8b039100925a8c001ac89bafb39093cfd03  qq-farm-bot-protected-node20-x64.tar.gz

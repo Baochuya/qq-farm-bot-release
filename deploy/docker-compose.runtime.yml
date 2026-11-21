@@ -1,0 +1,29 @@
+services:
+  # 运行时 compose（分发版，无 build 段，不含源码）
+  # 镜像由发布产物 docker load 得到，tag 固定 qq-farm-bot:latest
+  qq-farm-bot:
+    image: qq-farm-bot:latest
+    container_name: qq-farm-bot
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/core/data
+      - ./data/logs:/app/core/data/logs
+      # 网页端“一键更新”交换目录：宿主机 .update ⇄ 容器 /app/core/data/update
+      - ./.update:/app/core/data/update
+    environment:
+      - TZ=${TZ:-Asia/Shanghai}
+      - NODE_ENV=production
+      - ADMIN_PORT=3007
+      - RANCH_SERIAL_WINDOW_MS=${RANCH_SERIAL_WINDOW_MS:-25000}
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3007/api/game-version"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
