@@ -62,7 +62,7 @@ bash stop.sh      # 停止
 宿主机执行一次：
 
 ```bash
-bash deploy/install-update.sh --repo Baochuya/qq-farm-bot-release
+bash deploy/install-update.sh --repo Baochuya/farm-release
 ```
 
 - 写入 `.update/config.json`（owner/repo/proxy）并安装 cron，每分钟检查一次请求

@@ -210,7 +210,7 @@ fi
 
 # ---------- 1. 取发布信息 ----------
 write_state running check "读取发布信息" "" ""
-API="https://api.github.com/repos/$OWNER/$REPO/releases/latest"
+API="https://api.github.com/repos/$OWNER/$REPO/releases?per_page=30"
 META=""
 if [ -n "$OWNER" ] && [ -n "$REPO" ]; then
     AUTH_HDR=()
@@ -229,17 +229,26 @@ try:
     d = json.load(sys.stdin)
 except Exception:
     print(""); raise SystemExit
-tag = d.get("tag_name") or ""
-tar_url = sum_url = ""
 asset = sys.argv[1]
-for a in d.get("assets") or []:
-    name = a.get("name") or ""
-    if name == asset:
-        tar_url = a.get("browser_download_url") or ""
-    elif name in (asset + ".sha256", asset + ".sha256.txt"):
-        sum_url = a.get("browser_download_url") or ""
-print(tag, tar_url, sum_url)
-' "$ASSET" 2>/dev/null)"
+prefix = sys.argv[2]
+rels = d if isinstance(d, list) else [d]
+for r in rels:
+    tag = r.get("tag_name") or ""
+    if not tag.startswith(prefix):
+        continue
+    tar_url = sum_url = ""
+    for a in r.get("assets") or []:
+        name = a.get("name") or ""
+        if name == asset:
+            tar_url = a.get("browser_download_url") or ""
+        elif name in (asset + ".sha256", asset + ".sha256.txt"):
+            sum_url = a.get("browser_download_url") or ""
+    if tar_url:
+        print(tag, tar_url, sum_url)
+        break
+else:
+    print("")
+' "$ASSET" "bot-v" 2>/dev/null)"
 fi
 
 # ---------- 2. 准备镜像包（本地离线包优先） ----------

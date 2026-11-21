@@ -6,7 +6,7 @@
 #
 # 用法（在项目根目录执行）：
 #   bash deploy/install-update.sh
-#   bash deploy/install-update.sh --repo Baochuya/qq-farm-bot-release
+#   bash deploy/install-update.sh --repo Baochuya/farm-release
 #   bash deploy/install-update.sh --token ghp_xxx      # 私有仓库才需要
 #   bash deploy/install-update.sh --no-cron            # 只准备目录，不装 cron
 #
